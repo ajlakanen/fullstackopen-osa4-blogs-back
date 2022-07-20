@@ -95,3 +95,26 @@ describe("max likes", () => {
     expect(result).toEqual(manyBlogs[2]);
   });
 });
+
+describe("most blogs", () => {
+  test("empty list", () => {
+    const result = listHelper.mostBlogs(emptyList);
+    expect(result).toEqual({});
+  });
+
+  test("only one blog", () => {
+    const result = listHelper.mostBlogs(listWithOneBlog);
+    expect(result).toEqual({
+      author: listWithOneBlog[0].author,
+      blogs: 1,
+    });
+  });
+
+  test("many blogs", () => {
+    const result = listHelper.mostBlogs(manyBlogs);
+    expect(result).toEqual({
+      author: manyBlogs[3].author,
+      blogs: 3,
+    });
+  });
+});
