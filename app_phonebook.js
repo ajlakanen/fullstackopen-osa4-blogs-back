@@ -2,7 +2,7 @@ const config = require("./utils/config");
 const express = require("express");
 const app = express();
 const cors = require("cors");
-const blogRouter = require("./controllers/blogs");
+const personsRouter = require("./controllers/persons");
 const middleware = require("./utils/middleware");
 const logger = require("./utils/logger");
 const mongoose = require("mongoose");
@@ -27,7 +27,7 @@ app.use(express.static("build"));
 app.use(middleware.requestLogger);
 app.use(morgan("tiny", { skip: (req) => req.method === "POST" }));
 
-app.use("/api/blogs", blogRouter);
+app.use("/api/persons", personsRouter);
 
 app.use(middleware.unknownEndpoint);
 app.use(middleware.errorHandler);

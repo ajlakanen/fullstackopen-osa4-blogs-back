@@ -1,0 +1,9 @@
+POST http://localhost:3003/api/blogs
+Content-Type: application/json
+
+{
+    "title": "Antti-Jussi's thoughts",
+    "author": "Irmeli",
+    "url": "http://www.blog.com",
+    "likes": 1
+}

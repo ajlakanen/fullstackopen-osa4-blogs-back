@@ -1,5 +1,5 @@
-Full Stack Open 2022, osa 4, puhelinluettelo backend
+Full Stack Open 2022, osa 4, bloglist backend
 
-Front end: <https://github.com/ajlakanen/fullstackopen-osa4-puhlu-front>
+Front end: <https://github.com/ajlakanen/fullstackopen-osa4-blogs-front>
 
-Working app: <https://fso-puhlu.herokuapp.com/>
+Working app: (TBA)
