@@ -1,4 +1,4 @@
-const _ = require("lodash");
+const maxBy = require("lodash").maxBy;
 
 const dummy = (blogs) => {
   return 1;
@@ -28,7 +28,7 @@ const favoriteBlog = (blogs) => {
 
 const authorWithMostBlogs = (blogs) => {
   if (blogs.length === 0) return {};
-  const authorWithMostBlogs = _.maxBy(blogs, function (blog) {
+  const authorWithMostBlogs = maxBy(blogs, function (blog) {
     return authorBlogs(blogs, blog.author);
   }).author;
   const most = {
@@ -40,7 +40,7 @@ const authorWithMostBlogs = (blogs) => {
 
 const authorWithMostLikes = (blogs) => {
   if (blogs.length === 0) return {};
-  const authorWithMostLikes = _.maxBy(blogs, function (blog) {
+  const authorWithMostLikes = maxBy(blogs, function (blog) {
     return authorLikes(blogs, blog.author);
   }).author;
   const most = {
