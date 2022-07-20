@@ -24,10 +24,14 @@ const favoriteBlog = (blogs) => {
 
 const mostBlogs = (blogs) => {
   if (blogs.length === 0) return {};
-  const author = _.maxBy(blogs, function (o) {
-    return numberOfBlogs(blogs, o.author);
+  const authorWithMostBlogs = _.maxBy(blogs, function (blog) {
+    return numberOfBlogs(blogs, blog.author);
   }).author;
-  return { author, blogs: numberOfBlogs(blogs, author) };
+  const most = {
+    author: authorWithMostBlogs,
+    blogs: numberOfBlogs(blogs, authorWithMostBlogs),
+  };
+  return most;
 };
 
 module.exports = {
