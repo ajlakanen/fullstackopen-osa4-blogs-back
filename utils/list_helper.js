@@ -10,8 +10,12 @@ const totalLikes = (blogs) => {
   }, 0);
 };
 
-const numberOfBlogs = (blogs, author) => {
+const authorBlogs = (blogs, author) => {
   return blogs.filter((blog) => blog.author === author).length;
+};
+
+const authorLikes = (blogs, author) => {
+  return totalLikes(blogs.filter((blog) => blog.author === author));
 };
 
 const favoriteBlog = (blogs) => {
@@ -22,14 +26,26 @@ const favoriteBlog = (blogs) => {
   return favorite;
 };
 
-const mostBlogs = (blogs) => {
+const authorWithMostBlogs = (blogs) => {
   if (blogs.length === 0) return {};
   const authorWithMostBlogs = _.maxBy(blogs, function (blog) {
-    return numberOfBlogs(blogs, blog.author);
+    return authorBlogs(blogs, blog.author);
   }).author;
   const most = {
     author: authorWithMostBlogs,
-    blogs: numberOfBlogs(blogs, authorWithMostBlogs),
+    blogs: authorBlogs(blogs, authorWithMostBlogs),
+  };
+  return most;
+};
+
+const authorWithMostLikes = (blogs) => {
+  if (blogs.length === 0) return {};
+  const authorWithMostLikes = _.maxBy(blogs, function (blog) {
+    return authorLikes(blogs, blog.author);
+  }).author;
+  const most = {
+    author: authorWithMostLikes,
+    likes: authorLikes(blogs, authorWithMostLikes),
   };
   return most;
 };
@@ -38,5 +54,6 @@ module.exports = {
   dummy,
   totalLikes,
   favoriteBlog,
-  mostBlogs,
+  authorWithMostBlogs,
+  authorWithMostLikes,
 };

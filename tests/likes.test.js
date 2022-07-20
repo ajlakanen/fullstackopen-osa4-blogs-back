@@ -98,12 +98,12 @@ describe("max likes", () => {
 
 describe("most blogs", () => {
   test("empty list", () => {
-    const result = listHelper.mostBlogs(emptyList);
+    const result = listHelper.authorWithMostBlogs(emptyList);
     expect(result).toEqual({});
   });
 
   test("only one blog", () => {
-    const result = listHelper.mostBlogs(listWithOneBlog);
+    const result = listHelper.authorWithMostBlogs(listWithOneBlog);
     expect(result).toEqual({
       author: listWithOneBlog[0].author,
       blogs: 1,
@@ -111,10 +111,33 @@ describe("most blogs", () => {
   });
 
   test("many blogs", () => {
-    const result = listHelper.mostBlogs(manyBlogs);
+    const result = listHelper.authorWithMostBlogs(manyBlogs);
     expect(result).toEqual({
       author: manyBlogs[3].author,
       blogs: 3,
+    });
+  });
+});
+
+describe("most likes", () => {
+  test("empty list", () => {
+    const result = listHelper.authorWithMostLikes(emptyList);
+    expect(result).toEqual({});
+  });
+
+  test("only one blog", () => {
+    const result = listHelper.authorWithMostLikes(listWithOneBlog);
+    expect(result).toEqual({
+      author: listWithOneBlog[0].author,
+      likes: 5,
+    });
+  });
+
+  test("many blogs", () => {
+    const result = listHelper.authorWithMostLikes(manyBlogs);
+    expect(result).toEqual({
+      author: manyBlogs[1].author,
+      likes: 17,
     });
   });
 });
