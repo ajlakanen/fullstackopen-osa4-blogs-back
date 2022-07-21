@@ -17,7 +17,7 @@ const blogSchema = new mongoose.Schema({
   //   },
   //   required: [true, "phone number required"],
   // },
-  title: String,
+  title: { type: String, required: true },
   author: String,
   url: String,
   likes: Number,

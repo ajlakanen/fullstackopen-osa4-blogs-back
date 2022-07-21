@@ -1,4 +1,13 @@
 const emptyList = [];
+
+const blogWoTitle = {
+  _id: "5a422aa71b54a676234d17f6",
+  author: "Edsger W. Dijkstra",
+  url: "http://www.u.arizona.edu/~rubinson/copyright_violations/Go_To_Considered_Harmful.html",
+  likes: 5,
+  __v: 0,
+};
+
 const listWithOneBlog = [
   {
     _id: "5a422aa71b54a676234d17f8",
@@ -52,4 +61,4 @@ const manyBlogs = [
   },
 ];
 
-module.exports = { emptyList, listWithOneBlog, manyBlogs };
+module.exports = { blogWoTitle, emptyList, listWithOneBlog, manyBlogs };
