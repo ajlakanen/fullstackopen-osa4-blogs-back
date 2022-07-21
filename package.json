@@ -1,14 +1,14 @@
 {
-  "name": "puhelinluettelo",
+  "name": "bloglist",
   "version": "0.0.1",
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "node index.js",
-    "dev": "nodemon index.js",
+    "start": "cross-env NODE_ENV=production node index.js",
+    "dev": "cross-env NODE_ENV=development nodemon index.js",
     "build:ui": "powershell Remove-Item -r -fo build;cd ../2022-fso-osa4-puhlu-front/;npm run build;cp -r build ../2022-fso-osa4-puhlu-back/",
     "deploy:full": "powershell npm run build:ui ; git add . ; git commit -m \"uibuild\" ; git push heroku master",
-    "test": "jest --verbose",
+    "test": "cross-env NODE_ENV=test jest --verbose --runInBand --forceExit",
     "lint": "eslint ."
   },
   "author": "Antti-Jussi Lakanen",
@@ -21,10 +21,12 @@
     "morgan": "^1.10.0"
   },
   "devDependencies": {
+    "cross-env": "^7.0.3",
     "eslint": "^8.20.0",
     "jest": "^28.1.3",
     "lodash": "^4.17.21",
-    "nodemon": "^2.0.19"
+    "nodemon": "^2.0.19",
+    "supertest": "^6.2.4"
   },
   "jest": {
     "testEnvironment": "node"
