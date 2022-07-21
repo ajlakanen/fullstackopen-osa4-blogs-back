@@ -14,23 +14,22 @@ beforeEach(async () => {
   await Blog.deleteMany({});
   let blogObj = new Blog(initialTestData.listWithOneBlog[0]);
   await blogObj.save();
+
   /*
+  // miksihän tämä ei toimi?
   initialTestData.manyBlogs.map(async (blog) => {
     let a = new Blog(blog);
     await a.save();
   });
   */
-  // blogObj = new Blog(initialTestData.manyBlogs[0]);
-  // await blogObj.save();
-  // blogObj = new Blog(initialTestData.manyBlogs[1]);
-  // await blogObj.save();
-  // blogObj = new Blog(initialTestData.manyBlogs[2]);
-  // await blogObj.save();
-  // blogObj = new Blog(initialTestData.manyBlogs[3]);
-  // await blogObj.save();
-  // blogObj = new Blog(initialTestData.manyBlogs[4]);
-  // await blogObj.save();
-  Blog.insertMany(initialTestData.manyBlogs);
+
+  for (let i = 0; i < initialTestData.manyBlogs.length; i++) {
+    const blog = initialTestData.manyBlogs[i];
+    const a = new Blog(blog);
+    await a.save();
+  }
+  // useita dokumentteja voi laittaa myös näin
+  // Blog.insertMany(initialTestData.manyBlogs);
 });
 
 test("blog are returned as json", async () => {
