@@ -21,6 +21,8 @@ beforeEach(async () => {
     let a = new Blog(blog);
     await a.save();
   });
+  // OK, selitys täällä:
+  // https://fullstackopen.com/osa4/backendin_testaaminen#testin-before-each-metodin-optimointi
   */
 
   for (let i = 0; i < initialTestData.manyBlogs.length; i++) {
@@ -29,7 +31,7 @@ beforeEach(async () => {
     await a.save();
   }
   // useita dokumentteja voi laittaa myös näin
-  // Blog.insertMany(initialTestData.manyBlogs);
+  // await Blog.insertMany(initialTestData.manyBlogs);
 });
 
 test("blog are returned as json", async () => {
@@ -37,6 +39,12 @@ test("blog are returned as json", async () => {
     .get(`${BASEURL}`)
     .expect(200)
     .expect("Content-Type", /application\/json/);
+});
+
+test("blog id field is called id", async () => {
+  const response = await api.get(`${BASEURL}`);
+  const hasId = response.body.filter((blog) => "id" in blog);
+  expect(hasId).toHaveLength(response.body.length);
 });
 
 test("all blogs are returned", async () => {
@@ -72,13 +80,26 @@ test("a valid blog can be added ", async () => {
   expect(contents).toContain("Programming is fun");
 });
 
+test("a blog without likes defaults to 0 likes", async () => {
+  const newBlog = {
+    title: "Programming is fun",
+    author: "Antero-Jaakko Liukanen",
+    url: "http://www.google.com",
+  };
+
+  const resultBlog = await api
+    .post(`${BASEURL}`)
+    .send(newBlog)
+    .expect(201)
+    .expect("Content-Type", /application\/json/);
+
+  expect(resultBlog.body.likes).toEqual(0);
+});
+
 test("a specific blog can be viewed", async () => {
   const blogsAtStart = await helpers.blogsInDb();
 
   const blogToView = blogsAtStart[0];
-
-  console.log(blogToView);
-  console.log(blogToView.id);
 
   const resultBlog = await api
     .get(`${BASEURL}/${blogToView.id}`)
@@ -93,7 +114,6 @@ test("a specific blog can be viewed", async () => {
 test("a blog can be deleted", async () => {
   const blogsAtStart = await helpers.blogsInDb();
   const blogToDelete = blogsAtStart[0];
-  console.log(blogToDelete);
   await api.delete(`${BASEURL}/${blogToDelete.id}`).expect(204);
 
   const blogsAtEnd = await helpers.blogsInDb();

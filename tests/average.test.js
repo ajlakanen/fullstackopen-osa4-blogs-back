@@ -1,3 +1,4 @@
+// Example testing with Jest
 const average = require("../utils/for_testing").average;
 
 describe("average", () => {

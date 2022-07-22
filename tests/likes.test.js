@@ -1,3 +1,5 @@
+// Example testing with Jest
+
 const listHelper = require("../utils/list_helper");
 
 const emptyList = [];
