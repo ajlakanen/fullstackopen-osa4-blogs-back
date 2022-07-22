@@ -1,8 +1,7 @@
 const Blog = require("../models/blog");
-const initialTestData = require("./blogs_testdata");
 
 const nonExistingId = async () => {
-  const blog = new Blog(initialTestData.listWithOneBlog[0]);
+  const blog = new Blog({ title: "removable", url: "removable" });
   await blog.save();
   await blog.remove();
   return blog._id.toString();
