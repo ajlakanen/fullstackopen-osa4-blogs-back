@@ -72,6 +72,24 @@ test("a valid blog can be added ", async () => {
   expect(contents).toContain("Programming is fun");
 });
 
+test("a specific blog can be viewed", async () => {
+  const blogsAtStart = await helpers.blogsInDb();
+
+  const blogToView = blogsAtStart[0];
+
+  console.log(blogToView);
+  console.log(blogToView.id);
+
+  const resultBlog = await api
+    .get(`${BASEURL}/${blogToView.id}`)
+    .expect(200)
+    .expect("Content-Type", /application\/json/);
+
+  const processedBlogToView = JSON.parse(JSON.stringify(blogToView));
+
+  expect(resultBlog.body).toEqual(processedBlogToView);
+});
+
 test("blog without title is not added", async () => {
   await api.post(`${BASEURL}`).send(initialTestData.blogWoTitle).expect(400);
   const blogsAtEnd = await helpers.blogsInDb();
