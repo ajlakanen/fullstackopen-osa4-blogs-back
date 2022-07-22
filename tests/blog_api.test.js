@@ -90,6 +90,20 @@ test("a specific blog can be viewed", async () => {
   expect(resultBlog.body).toEqual(processedBlogToView);
 });
 
+test("a blog can be deleted", async () => {
+  const blogsAtStart = await helpers.blogsInDb();
+  const blogToDelete = blogsAtStart[0];
+  console.log(blogToDelete);
+  await api.delete(`${BASEURL}/${blogToDelete.id}`).expect(204);
+
+  const blogsAtEnd = await helpers.blogsInDb();
+  expect(blogsAtEnd).toHaveLength(initialTestDataLength - 1);
+
+  const titles = blogsAtEnd.map((b) => b.title);
+
+  expect(titles).not.toContain(blogToDelete.content);
+});
+
 test("blog without title is not added", async () => {
   await api.post(`${BASEURL}`).send(initialTestData.blogWoTitle).expect(400);
   const blogsAtEnd = await helpers.blogsInDb();
