@@ -130,6 +130,12 @@ test("blog without title is not added", async () => {
   expect(blogsAtEnd).toHaveLength(initialTestDataLength);
 });
 
+test("blog without url is not added", async () => {
+  await api.post(`${BASEURL}`).send(initialTestData.blogWoUrl).expect(400);
+  const blogsAtEnd = await helpers.blogsInDb();
+  expect(blogsAtEnd).toHaveLength(initialTestDataLength);
+});
+
 afterAll(() => {
   mongoose.connection.close();
 });

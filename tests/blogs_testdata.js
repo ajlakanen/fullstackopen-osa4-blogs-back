@@ -8,6 +8,14 @@ const blogWoTitle = {
   __v: 0,
 };
 
+const blogWoUrl = {
+  _id: "5a422aa71b54a676234d17f6",
+  title: "Go To Statement Considered Harmful",
+  author: "Edsger W. Dijkstra",
+  likes: 5,
+  __v: 0,
+};
+
 const listWithOneBlog = [
   {
     _id: "5a422aa71b54a676234d17f8",
@@ -61,4 +69,10 @@ const manyBlogs = [
   },
 ];
 
-module.exports = { blogWoTitle, emptyList, listWithOneBlog, manyBlogs };
+module.exports = {
+  blogWoTitle,
+  blogWoUrl,
+  emptyList,
+  listWithOneBlog,
+  manyBlogs,
+};
