@@ -47,17 +47,22 @@ blogsRouter.post("/", async (request, response, next) => {
 });
 
 blogsRouter.put("/:id", async (request, response, next) => {
-  const { name, number } = request.body;
+  const { title, url, likes } = request.body;
 
-  Blog.findByIdAndUpdate(
-    request.params.id,
-    { name, number },
-    { new: true, runValidators: true, context: "query" }
-  )
-    .then((updatedPerson) => {
-      response.json(updatedPerson);
-    })
-    .catch((error) => next(error));
+  try {
+    const updated = await Blog.findByIdAndUpdate(
+      request.params.id,
+      { title, url, likes },
+      { new: true, runValidators: true, context: "query" }
+    );
+    if (updated) {
+      response.json(updated);
+    } else {
+      response.status(404).end();
+    }
+  } catch (exception) {
+    next(exception);
+  }
 });
 
 blogsRouter.delete("/:id", async (request, response, next) => {
