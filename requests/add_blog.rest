@@ -2,8 +2,9 @@ POST http://localhost:3003/api/blogs
 Content-Type: application/json
 
 {
-    "title": "Antti-Jussi's thoughts",
+    "title": "Antti-Jussis thoughts 2",
     "author": "Irmeli",
     "url": "http://www.blog.com",
-    "likes": 1
+    "likes": 1,
+    "userId": "62dbc9808c3ee1a4d7459875"
 }

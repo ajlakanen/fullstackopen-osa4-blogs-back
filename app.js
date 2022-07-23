@@ -31,8 +31,8 @@ app.use(morgan("tiny", { skip: (req) => req.method === "POST" }));
 app.use("/api/blogs", blogRouter);
 app.use("/api/users", usersRouter);
 
-app.use(middleware.unknownEndpoint);
 app.use(middleware.errorHandler);
+app.use(middleware.unknownEndpoint);
 
 morgan.token("data", (req) => JSON.stringify(req.body));
 app.use(
