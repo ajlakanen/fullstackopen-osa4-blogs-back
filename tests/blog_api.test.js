@@ -19,6 +19,7 @@ const newUser = {
   password: "salainen",
 };
 let token = "";
+let userid = "";
 
 beforeEach(async () => {
   await Blog.deleteMany({});
@@ -57,8 +58,13 @@ beforeEach(async () => {
     username: newUser.username,
     password: newUser.password,
   });
-  console.log(response.data);
+  //console.log(response.data);
   token = response.data.token;
+  const user = await User.findOne({
+    username: response.data.username,
+  });
+  userid = user._id;
+  console.log(userid);
 });
 
 test("1 user", async () => {
@@ -134,6 +140,7 @@ describe("addition of a new blog", () => {
       author: "Antero-Jaakko Liukanen",
       url: "http://www.google.com",
       likes: 5,
+      user: userid,
     };
 
     await api
@@ -148,11 +155,10 @@ describe("addition of a new blog", () => {
     const contents = blogsAtEnd.map((blog) => blog.title);
     expect(contents).toContain("Programming is fun");
   });
-});
-/*
+
   test("a blog without likes defaults to 0 likes", async () => {
     const newBlog = {
-      title: "Programming is fun",
+      title: "TEST: Programming is fun",
       author: "Antero-Jaakko Liukanen",
       url: "http://www.google.com",
     };
@@ -160,11 +166,14 @@ describe("addition of a new blog", () => {
     const resultBlog = await api
       .post(`${BASEURL}`)
       .send(newBlog)
+      .set("Authorization", "bearer " + token)
       .expect(201)
       .expect("Content-Type", /application\/json/);
 
     expect(resultBlog.body.likes).toEqual(0);
   });
+});
+/*
 
   test("blog without title is not added", async () => {
     await api.post(`${BASEURL}`).send(initialTestData.blogWoTitle).expect(400);
