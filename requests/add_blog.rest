@@ -1,6 +1,6 @@
 POST http://localhost:3003/api/blogs
 Content-Type: application/json
-Authorization:  bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImFhamlpODIhIiwiaWQiOiI2MmRjZjJiZDQ5OWExYTVkNTU0MGJkNDciLCJpYXQiOjE2NTg2NDcyNjYsImV4cCI6MTY1ODY1MDg2Nn0.Hg7dJaLYSGQalDUrZ6cPCC_K42aaKjQkTJ_Ib49jU6o
+Authorization:  bearer 1eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImFhamlpODIhIiwiaWQiOiI2MmRjZjJiZDQ5OWExYTVkNTU0MGJkNDciLCJpYXQiOjE2NTg2NTcwMzQsImV4cCI6MTY1ODY2MDYzNH0.6HrsGLkl3sTLeRKB5fVZ9UayiwThI0Fv99Sj-ng3a2A
 
 {
     "title": "aajii82 blog",

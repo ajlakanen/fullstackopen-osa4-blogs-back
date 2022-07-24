@@ -21,30 +21,12 @@ blogsRouter.get("/:id", async (request, response, next) => {
   }
 });
 
-// personRouter.get("/info", (req, res) => {
-//   Person.countDocuments({}, function (err, count) {
-//     res.send(
-//       `<p>Phonebook has info for ${count} people.</p><p>${new Date()}</p>`
-//     );
-//   });
-// });
-
-const getTokenFrom = (request) => {
-  const authorization = request.get("authorization");
-  if (authorization && authorization.toLowerCase().startsWith("bearer ")) {
-    return authorization.substring(7);
-  }
-  return null;
-};
-
 blogsRouter.post("/", async (request, response, next) => {
   try {
-    const token = getTokenFrom(request);
-    const decodedToken = jwt.verify(token, process.env.SECRET);
-    if (!token || !decodedToken.id) {
+    const decodedToken = jwt.verify(request.token, process.env.SECRET);
+    if (!request.token || !decodedToken.id) {
       return response.status(401).json({ error: "token missing or invalid" });
     }
-    //const user = await User.findById(request.body.userId);
     const user = await User.findById(decodedToken.id);
     const blog = new Blog({ ...request.body, user: user._id });
     const saved = await blog.save();
@@ -77,7 +59,19 @@ blogsRouter.put("/:id", async (request, response, next) => {
 
 blogsRouter.delete("/:id", async (request, response, next) => {
   try {
-    await Blog.findByIdAndRemove(request.params.id);
+    const decodedToken = jwt.verify(request.token, process.env.SECRET);
+    if (!request.token || !decodedToken.id) {
+      return response.status(401).json({ error: "token missing or invalid" });
+    }
+    const tokenUser = await User.findById(decodedToken.id);
+    const blog = await Blog.findById(request.params.id);
+    const blogUser = await User.findById(blog.user);
+    if (tokenUser === null || blogUser === null)
+      return response.status(401).json({ error: "no permission" });
+
+    if (tokenUser.toString() !== blogUser.toString())
+      return response.status(401).json({ error: "no permission" });
+    await Blog.findByIdAndDelete(blog.id);
     response.status(204).end();
   } catch (exception) {
     next(exception);
