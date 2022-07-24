@@ -7,8 +7,11 @@ const initialTestData = require("./blogs_testdata");
 const initialTestDataLength =
   initialTestData.listWithOneBlog.length + initialTestData.manyBlogs.length;
 const Blog = require("../models/blog");
+const User = require("../models/user");
 
 const BASEURL = "/api/blogs";
+
+let token = "";
 
 beforeEach(async () => {
   await Blog.deleteMany({});
@@ -32,6 +35,21 @@ beforeEach(async () => {
   }
   // useita dokumentteja voi laittaa myös näin
   // await Blog.insertMany(initialTestData.manyBlogs);
+
+  /* TODO:
+  * Tehdään testikäytäjä jonka token tallennetaan
+  * ja tehdään uudet blogimerkinnät sen avulla.
+  await User.deleteMany({});
+
+  const newUser = {
+    username: "aajii",
+    name: "Antero-Jaakko Liukanen",
+    password: "salainen",
+  };
+
+  const response = await api.post("/api/users").send(newUser);
+  console.log(response.body);
+  */
 });
 
 describe("initially some blogs saved", () => {
