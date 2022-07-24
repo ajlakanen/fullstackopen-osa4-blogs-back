@@ -1,6 +1,6 @@
 POST http://localhost:3003/api/blogs
 Content-Type: application/json
-Authorization:  bearer 1eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImFhamlpIiwiaWQiOiI2MmRiYzk4MDhjM2VlMWE0ZDc0NTk4NzUiLCJpYXQiOjE2NTg2MDI1OTV9.tD90K-yXxJEoPdBETbmmWSlj5c9OWa1E4Aq6fwTgilQ
+Authorization:  bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImFhamlpIiwiaWQiOiI2MmRiYzk4MDhjM2VlMWE0ZDc0NTk4NzUiLCJpYXQiOjE2NTg2MDI1OTV9.tD90K-yXxJEoPdBETbmmWSlj5c9OWa1E4Aq6fwTgilQ
 
 {
     "title": "Antti-Jussis thoughts 3",

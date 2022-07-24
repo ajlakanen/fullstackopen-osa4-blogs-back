@@ -38,24 +38,15 @@ const getTokenFrom = (request) => {
 };
 
 blogsRouter.post("/", async (request, response, next) => {
-  //const user = await User.findById(request.body.userId);
-  const token = getTokenFrom(request);
-  const decodedToken = jwt.verify(token, process.env.SECRET);
-  if (!token || !decodedToken.id) {
-    return response.status(401).json({ error: "token missing or invalid" });
-  }
-  const user = await User.findById(decodedToken.id);
-
-  const blog = new Blog({ ...request.body, user: user._id });
-  /*
-  blog
-    .save()
-    .then((result) => {
-      response.status(201).json(result);
-    })
-    .catch((error) => next(error));
-    */
   try {
+    const token = getTokenFrom(request);
+    const decodedToken = jwt.verify(token, process.env.SECRET);
+    if (!token || !decodedToken.id) {
+      return response.status(401).json({ error: "token missing or invalid" });
+    }
+    //const user = await User.findById(request.body.userId);
+    const user = await User.findById(decodedToken.id);
+    const blog = new Blog({ ...request.body, user: user._id });
     const saved = await blog.save();
     user.blogs = user.blogs.concat(saved._id);
     await user.save();
