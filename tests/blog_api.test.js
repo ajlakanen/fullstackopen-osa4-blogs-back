@@ -2,15 +2,22 @@ const mongoose = require("mongoose");
 const supertest = require("supertest");
 const helpers = require("./test_helper");
 const app = require("../app");
+const axios = require("axios");
 const api = supertest(app);
 const initialTestData = require("./blogs_testdata");
 const initialTestDataLength =
   initialTestData.listWithOneBlog.length + initialTestData.manyBlogs.length;
 const Blog = require("../models/blog");
 const User = require("../models/user");
+const { response } = require("../app");
 
 const BASEURL = "/api/blogs";
 
+const newUser = {
+  username: "aajii",
+  name: "Antero-Jaakko Liukanen",
+  password: "salainen",
+};
 let token = "";
 
 beforeEach(async () => {
@@ -37,21 +44,33 @@ beforeEach(async () => {
   // await Blog.insertMany(initialTestData.manyBlogs);
 
   /* TODO:
-  * Tehdään testikäytäjä jonka token tallennetaan
-  * ja tehdään uudet blogimerkinnät sen avulla.
+   * Tehdään testikäytäjä jonka token tallennetaan
+   * ja tehdään uudet blogimerkinnät sen avulla.
+   * */
   await User.deleteMany({});
 
-  const newUser = {
-    username: "aajii",
-    name: "Antero-Jaakko Liukanen",
-    password: "salainen",
-  };
-
-  const response = await api.post("/api/users").send(newUser);
-  console.log(response.body);
-  */
+  await api.post("/api/users").send(newUser);
+  // const response = await api
+  //   .post("api/login")
+  //   .send({ username: newUser.username, password: newUser.password });
+  const response = await axios.post("http://localhost:3003/api/login", {
+    username: newUser.username,
+    password: newUser.password,
+  });
+  console.log(response.data);
+  token = response.data.token;
 });
 
+test("1 user", async () => {
+  const usersAtEnd = await helpers.usersInDb();
+  expect(usersAtEnd).toHaveLength(1);
+});
+
+test("add blog", async () => {});
+
+//});
+
+/*
 describe("initially some blogs saved", () => {
   test("blog are returned as json", async () => {
     await api
@@ -107,7 +126,7 @@ describe("viewing a specific blog", () => {
     await api.get(`${BASEURL}/${invalidId}`).expect(400);
   });
 });
-
+*/
 describe("addition of a new blog", () => {
   test("a valid blog can be added ", async () => {
     const newBlog = {
@@ -120,6 +139,7 @@ describe("addition of a new blog", () => {
     await api
       .post(`${BASEURL}`)
       .send(newBlog)
+      .set("Authorization", "bearer " + token)
       .expect(201)
       .expect("Content-Type", /application\/json/);
 
@@ -128,7 +148,8 @@ describe("addition of a new blog", () => {
     const contents = blogsAtEnd.map((blog) => blog.title);
     expect(contents).toContain("Programming is fun");
   });
-
+});
+/*
   test("a blog without likes defaults to 0 likes", async () => {
     const newBlog = {
       title: "Programming is fun",
@@ -173,3 +194,4 @@ test("a blog can be deleted", async () => {
 afterAll(() => {
   mongoose.connection.close();
 });
+*/

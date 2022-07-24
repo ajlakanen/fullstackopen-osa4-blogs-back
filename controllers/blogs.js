@@ -23,11 +23,11 @@ blogsRouter.get("/:id", async (request, response, next) => {
 
 blogsRouter.post("/", async (request, response, next) => {
   try {
-    const decodedToken = jwt.verify(request.token, process.env.SECRET);
-    if (!request.token || !decodedToken.id) {
-      return response.status(401).json({ error: "token missing or invalid" });
-    }
-    const user = await User.findById(decodedToken.id);
+    //const decodedToken = jwt.verify(request.token, process.env.SECRET);
+    //if (!request.token || !decodedToken.id) {
+    //  return response.status(401).json({ error: "token missing or invalid" });
+    //}
+    const user = await User.findById(request.user.id);
     const blog = new Blog({ ...request.body, user: user._id });
     const saved = await blog.save();
     user.blogs = user.blogs.concat(saved._id);
@@ -59,17 +59,17 @@ blogsRouter.put("/:id", async (request, response, next) => {
 
 blogsRouter.delete("/:id", async (request, response, next) => {
   try {
-    const decodedToken = jwt.verify(request.token, process.env.SECRET);
-    if (!request.token || !decodedToken.id) {
-      return response.status(401).json({ error: "token missing or invalid" });
-    }
-    const tokenUser = await User.findById(decodedToken.id);
+    //const decodedToken = jwt.verify(request.token, process.env.SECRET);
+    //if (!request.token || !decodedToken.id) {
+    //  return response.status(401).json({ error: "token missing or invalid" });
+    //}
+    const user = await User.findById(request.user.id);
     const blog = await Blog.findById(request.params.id);
     const blogUser = await User.findById(blog.user);
-    if (tokenUser === null || blogUser === null)
+    if (user === null || blogUser === null)
       return response.status(401).json({ error: "no permission" });
 
-    if (tokenUser.toString() !== blogUser.toString())
+    if (user.toString() !== blogUser.toString())
       return response.status(401).json({ error: "no permission" });
     await Blog.findByIdAndDelete(blog.id);
     response.status(204).end();
