@@ -1,11 +1,11 @@
 POST http://localhost:3003/api/blogs
 Content-Type: application/json
-Authorization:  bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImFhamlpIiwiaWQiOiI2MmRiYzk4MDhjM2VlMWE0ZDc0NTk4NzUiLCJpYXQiOjE2NTg2MDI1OTV9.tD90K-yXxJEoPdBETbmmWSlj5c9OWa1E4Aq6fwTgilQ
+Authorization:  bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImFhamlpODIhIiwiaWQiOiI2MmRjZjJiZDQ5OWExYTVkNTU0MGJkNDciLCJpYXQiOjE2NTg2NDcyNjYsImV4cCI6MTY1ODY1MDg2Nn0.Hg7dJaLYSGQalDUrZ6cPCC_K42aaKjQkTJ_Ib49jU6o
 
 {
-    "title": "Antti-Jussis thoughts 3",
+    "title": "aajii82 blog",
     "author": "Irmeli",
     "url": "http://www.blog.com",
     "likes": 1,
-    "userId": "62dbc9808c3ee1a4d7459875"
+    "userId": "62dcf2bd499a1a5d5540bd47"
 }
