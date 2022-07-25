@@ -1,4 +1,3 @@
-const { request, response } = require("express");
 const logger = require("./logger");
 const jwt = require("jsonwebtoken");
 

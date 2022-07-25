@@ -10,7 +10,6 @@ const initialTestDataLength =
   initialTestData.listWithOneBlog.length + initialTestData.manyBlogs.length;
 const Blog = require("../models/blog");
 const User = require("../models/user");
-const { response } = require("../app");
 
 const BASEURL = "/api/blogs";
 
