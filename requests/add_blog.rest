@@ -3,7 +3,7 @@ Content-Type: application/json
 Authorization:  bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImFhamlpODIhIiwiaWQiOiI2MmRjZjJiZDQ5OWExYTVkNTU0MGJkNDciLCJpYXQiOjE2NTg2NjMyNDQsImV4cCI6MTY1ODY2Njg0NH0.CSomsMHtIuKOdQDrW2LYhbRRrX4Q7RfhozTT3D1gl-8
 
 {
-    "title": "aajii82 blog",
+    "title": "TEST: aajii82 blog",
     "author": "Irmeli",
     "url": "http://www.blog.com",
     "likes": 1,
