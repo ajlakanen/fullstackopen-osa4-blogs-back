@@ -34,25 +34,6 @@ blogsRouter.post("/", userExtractor, async (request, response, next) => {
   }
 });
 
-blogsRouter.post("/:id/like", async (request, response, next) => {
-  try {
-    const blog = await Blog.findById(request.params.id);
-    const responseBlog = await Blog.findByIdAndUpdate(
-      request.params.id,
-      { likes: blog.likes + 1 },
-      { new: true, runValidators: true, context: "query" }
-    );
-
-    if (responseBlog) {
-      response.json(responseBlog);
-    } else {
-      response.status(404).end();
-    }
-  } catch (error) {
-    next(error);
-  }
-});
-
 // TODO: Update title author url, check identity
 blogsRouter.put("/:id", async (request, response, next) => {
   // const { title, author, url, likes } = request.body;
