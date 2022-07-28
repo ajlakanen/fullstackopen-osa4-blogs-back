@@ -31,7 +31,12 @@ blogsRouter.post("/", userExtractor, async (request, response, next) => {
     const saved = await blog.save();
     user.blogs = user.blogs.concat(saved._id);
     await user.save();
-    response.status(201).json(saved);
+    // Redundant find? Solve at some point
+    const newBlog = await Blog.findById(saved.id).populate("user", {
+      username: 1,
+      name: 1,
+    });
+    response.status(201).json(newBlog);
   } catch (exception) {
     next(exception);
   }
