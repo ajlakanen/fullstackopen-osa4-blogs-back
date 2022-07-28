@@ -42,7 +42,7 @@ blogsRouter.post("/", userExtractor, async (request, response, next) => {
   }
 });
 
-// TODO: Update title author url, check identity
+// TODO: When updating title, author orl url, check identity
 blogsRouter.put("/:id", async (request, response, next) => {
   // const { title, author, url, likes } = request.body;
   const { likes } = request.body;
@@ -77,6 +77,7 @@ blogsRouter.delete("/:id", userExtractor, async (request, response, next) => {
     if (user.toString() !== blogUser.toString())
       return response.status(401).json({ error: "no permission" });
     await Blog.findByIdAndDelete(blog.id);
+    // TODO: Remove blog reference from user document
     response.status(204).end();
   } catch (exception) {
     next(exception);
