@@ -77,7 +77,11 @@ blogsRouter.delete("/:id", userExtractor, async (request, response, next) => {
     if (user.toString() !== blogUser.toString())
       return response.status(401).json({ error: "no permission" });
     await Blog.findByIdAndDelete(blog.id);
-    // TODO: Remove blog reference from user document
+    user.blogs = user.blogs.filter(
+      (b) => b._id.toString() !== request.params.id
+    );
+
+    await user.save();
     response.status(204).end();
   } catch (exception) {
     next(exception);
