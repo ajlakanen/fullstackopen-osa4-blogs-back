@@ -1,5 +1,5 @@
 {
-  "name": "bloglist",
+  "name": "bloglist-backend",
   "version": "0.0.1",
   "description": "",
   "main": "index.js",
@@ -10,7 +10,8 @@
     "build:ui": "powershell Remove-Item -r -fo build;cd ../2022-fso-osa4-puhlu-front/;npm run build;cp -r build ../2022-fso-osa4-puhlu-back/",
     "deploy:full": "powershell npm run build:ui ; git add . ; git commit -m \"uibuild\" ; git push heroku master",
     "test": "cross-env NODE_ENV=test jest --verbose --runInBand --forceExit",
-    "lint": "eslint ."
+    "lint": "eslint .",
+    "start:test": "cross-env NODE_ENV=test node index.js"
   },
   "author": "Antti-Jussi Lakanen",
   "license": "MIT",
@@ -26,6 +27,7 @@
   "devDependencies": {
     "axios": "^0.27.2",
     "cross-env": "^7.0.3",
+    "cypress": "^10.3.1",
     "eslint": "^8.20.0",
     "jest": "^28.1.3",
     "lodash": "^4.17.21",

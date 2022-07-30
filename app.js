@@ -30,7 +30,13 @@ app.use(cors());
 app.use(express.static("build"));
 app.use(middleware.requestLogger);
 app.use(morgan("tiny", { skip: (req) => req.method === "POST" }));
-
+morgan.token("data", (req) => JSON.stringify(req.body));
+app.use(
+  morgan(
+    ":method :url :status :res[content-length] - :response-time ms :data",
+    { skip: (req) => req.method !== "POST" }
+  )
+);
 app.use(middleware.tokenExtractor);
 
 app.use("/api/blogs", blogRouter);
@@ -39,13 +45,5 @@ app.use("/api/login", loginRouter);
 
 app.use(middleware.errorHandler);
 app.use(middleware.unknownEndpoint);
-
-morgan.token("data", (req) => JSON.stringify(req.body));
-app.use(
-  morgan(
-    ":method :url :status :res[content-length] - :response-time ms :data",
-    { skip: (req) => req.method !== "POST" }
-  )
-);
 
 module.exports = app;
